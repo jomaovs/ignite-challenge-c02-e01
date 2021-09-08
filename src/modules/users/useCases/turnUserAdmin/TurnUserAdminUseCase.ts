@@ -6,10 +6,19 @@ interface IRequest {
 }
 
 class TurnUserAdminUseCase {
-  constructor(private usersRepository: IUsersRepository) {}
+  // eslint-disable-next-line prettier/prettier
+  constructor(private usersRepository: IUsersRepository) { }
 
   execute({ user_id }: IRequest): User {
     // Complete aqui
+    let user = this.usersRepository.findById(user_id);
+    if (!user) {
+      throw new Error("User doesn't exists");
+    }
+
+    user = this.usersRepository.turnAdmin(user);
+
+    return user;
   }
 }
 
